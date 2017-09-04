@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class FileUtils {
     public static void writeToFile(String json, String path) throws IOException {
-        System.out.println("Saving data");
+        //System.out.println("Saving data");
         FileWriter writer = new FileWriter(path);
         writer.write(json);
         writer.flush();
@@ -15,7 +15,7 @@ public class FileUtils {
     }
 
     public static String readFromFile(String path) throws IOException {
-        System.out.println("Loading data");
+        //System.out.println("Loading data");
         BufferedReader reader = new BufferedReader(new FileReader(path));
         String json = reader.readLine();
         return json;

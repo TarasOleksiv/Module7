@@ -9,16 +9,16 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtils {
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    private Calendar calendar = Calendar.getInstance();
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    private static Calendar calendar = Calendar.getInstance();
 
-    public Date convertStringToDate(String string) throws ParseException {
-        calendar.setTime(dateFormat.parse(string));
+    public static Date convertStringToDate(String stringDate) throws ParseException {
+        calendar.setTime(dateFormat.parse(stringDate));
         Date newDate = calendar.getTime();
         return newDate;
     }
 
-    public Boolean datesComparing(Date dateExpiration, Date date) {
+    public static Boolean isSpoiled(Date dateExpiration, Date date) {
         if (dateExpiration.getTime() < date.getTime()) {
             return true;
         } else {
@@ -26,15 +26,11 @@ public class DateUtils {
         }
     }
 
-    public Date getDateExpiration(String dateDelivery, int plusDay) throws ParseException {
-        calendar.setTime(dateFormat.parse(dateDelivery));
-        calendar.add(Calendar.DAY_OF_MONTH, plusDay);
+    public static Date getDateExpiration(String dateSupply, int addDays) throws ParseException {
+        calendar.setTime(dateFormat.parse(dateSupply));
+        calendar.add(Calendar.DAY_OF_MONTH, addDays);
         Date newDate = calendar.getTime();
         return newDate;
-    }
-
-    public SimpleDateFormat getDateFormat(){
-        return dateFormat;
     }
 
 }

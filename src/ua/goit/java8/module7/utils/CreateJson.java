@@ -1,68 +1,36 @@
 package ua.goit.java8.module7.utils;
 
+import ua.goit.java8.module7.Fruit;
 import com.alibaba.fastjson.JSON;
-//import Fruit;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class CreateJson {
-    private static String[] dateDelivery = {"20.08.2017", "21.08.2017", "23.08.2017"};
-    private static String[] clients = {"Александр", "Ольга", "Злата", "Марина", "Иван"};
-    private static Random random = new Random();
+    private String[] dateDelivery = {"04/08/2017", "05/08/2017", "06/08/2017", "07/08/2017"};
 
-    private CreateJson() {
-    }
-
-    public static void generateDelivery() {
+    public CreateJson() {
         for (int i = 0; i < dateDelivery.length; i++) {
             List<Fruit> fruits = new ArrayList<>();
-            int countFruit = random.nextInt(9) + 1;
-            //int countFruit = 1;
-            for (int j = 0; j < countFruit; j++) {
-                fruits.add(new Fruit(BigDecimal.valueOf(50.25), dateDelivery[i], 10, Fruit.TypeFruit.апельсин));
-                fruits.add(new Fruit(BigDecimal.valueOf(40.69), dateDelivery[i], 20, Fruit.TypeFruit.ананас));
-                fruits.add(new Fruit(BigDecimal.valueOf(20.24), dateDelivery[i], 5, Fruit.TypeFruit.арбуз));
-                fruits.add(new Fruit(BigDecimal.valueOf(99.99), dateDelivery[i], 4, Fruit.TypeFruit.банан));
-                fruits.add(new Fruit(BigDecimal.valueOf(25.24), dateDelivery[i], 8, Fruit.TypeFruit.вишня));
-                fruits.add(new Fruit(BigDecimal.valueOf(69.96), dateDelivery[i], 6, Fruit.TypeFruit.грейпфрут));
-                fruits.add(new Fruit(BigDecimal.valueOf(47.74), dateDelivery[i], 15, Fruit.TypeFruit.груша));
-                fruits.add(new Fruit(BigDecimal.valueOf(23.01), dateDelivery[i], 20, Fruit.TypeFruit.дыня));
-                fruits.add(new Fruit(BigDecimal.valueOf(12.65), dateDelivery[i], 13, Fruit.TypeFruit.клубника));
-                fruits.add(new Fruit(BigDecimal.valueOf(58.25), dateDelivery[i], 12, Fruit.TypeFruit.яблоко));
-
-            }
+            fruits.add(new Fruit(Fruit.Type.apple, 10, dateDelivery[i], 25));
+            fruits.add(new Fruit(Fruit.Type.tangerine, 5, dateDelivery[i], 35));
+            fruits.add(new Fruit(Fruit.Type.apricot, 12, dateDelivery[i], 20));
+            fruits.add(new Fruit(Fruit.Type.plum, 6, dateDelivery[i], 30));
+            fruits.add(new Fruit(Fruit.Type.banana, 15, dateDelivery[i], 15));
+            fruits.add(new Fruit(Fruit.Type.pear, 8, dateDelivery[i], 45));
+            fruits.add(new Fruit(Fruit.Type.grapefruit, 18, dateDelivery[i], 55));
+            fruits.add(new Fruit(Fruit.Type.peach, 9, dateDelivery[i], 40));
+            fruits.add(new Fruit(Fruit.Type.mellon, 20, dateDelivery[i], 50));
+            fruits.add(new Fruit(Fruit.Type.watermelon, 4, dateDelivery[i], 10));
             String json = JSON.toJSONString(fruits);
             try {
-                FileUtils.writeToFile(json, "files/date_" + dateDelivery[i] + ".txt");
+                FileUtils.writeToFile(json, "files/supply" + (i+1) + ".json");
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    public static void generateOrder(){
-        List<Client> clientsList = new ArrayList<>();
-        for (int i = 0; i < clients.length; i++) {
-            int countFruit = random.nextInt(18) + 1;
-            int countTypeFruit = random.nextInt(Fruit.TypeFruit.values().length-1) + 1;
-            clientsList.add(new Client(clients[i], countFruit, Fruit.TypeFruit.values()[countTypeFruit]));
-        }
-
-        String json = JSON.toJSONString(clientsList);
-        try {
-            FileUtils.writeToFile(json, "files/order.txt");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-
+        System.out.println("Finish creating JSON files.");
     }
 
 }

@@ -1,7 +1,5 @@
 package ua.goit.java8.module7;
 
-import java.util.Date;
-
 /**
  * Created by t.oleksiv on 04/09/2017.
  */
@@ -9,13 +7,13 @@ public class Fruit {
     public enum Type {banana, apple, pear, plum, peach, apricot, mellon, watermelon, grapefruit, tangerine};
     private Type type;
     private int shelfLife;
-    private Date date;
+    private String dateSupply;
     private int price;
 
-    public Fruit(Type type,int shelfLife, Date date, int price){
+    public Fruit(Type type,int shelfLife, String dateSupply, int price){
         this.type = type;
         this.shelfLife = shelfLife;
-        this.date = date;
+        this.dateSupply = dateSupply;
         this.price = price;
     }
 
@@ -27,8 +25,8 @@ public class Fruit {
         return shelfLife;
     }
 
-    public Date getDate(){
-        return date;
+    public String getDateSupply(){
+        return dateSupply;
     }
 
     public int getPrice(){
