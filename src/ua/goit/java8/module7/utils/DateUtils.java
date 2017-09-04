@@ -1,4 +1,4 @@
-package utils;
+package ua.goit.java8.module7.utils;
 
 /**
  * Created by t.oleksiv on 04/09/2017.

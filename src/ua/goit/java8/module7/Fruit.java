@@ -1,3 +1,5 @@
+package ua.goit.java8.module7;
+
 import java.util.Date;
 
 /**

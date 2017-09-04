@@ -1,3 +1,5 @@
+package ua.goit.java8.module7;
+
 import com.alibaba.fastjson.JSON;
 
 import java.io.IOException;
@@ -5,7 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import utils.FileUtils;
+import ua.goit.java8.module7.utils.FileUtils;
 
 
 /**
@@ -31,11 +33,11 @@ public class Main {
         Fruit fruit4 = new Fruit(Fruit.Type.plum,20,parsingDate,20);
         Fruit fruit5 = new Fruit(Fruit.Type.banana,25,parsingDate,45);
 
-        String json1 = JSON.toJSONStringWithDateFormat(fruit1, "MM/dd/yyyy");
-        String json2 = JSON.toJSONStringWithDateFormat(fruit2, "MM/dd/yyyy");
-        String json3 = JSON.toJSONStringWithDateFormat(fruit3, "MM/dd/yyyy");
-        String json4 = JSON.toJSONStringWithDateFormat(fruit4, "MM/dd/yyyy");
-        String json5 = JSON.toJSONStringWithDateFormat(fruit5, "MM/dd/yyyy");
+        String json1 = JSON.toJSONStringWithDateFormat(fruit1, "dd/MM/yyyy");
+        String json2 = JSON.toJSONStringWithDateFormat(fruit2, "dd/MM/yyyy");
+        String json3 = JSON.toJSONStringWithDateFormat(fruit3, "dd/MM/yyyy");
+        String json4 = JSON.toJSONStringWithDateFormat(fruit4, "dd/MM/yyyy");
+        String json5 = JSON.toJSONStringWithDateFormat(fruit5, "dd/MM/yyyy");
 
         ArrayList<String > income1 = new ArrayList<>(5);
         income1.add(json1);

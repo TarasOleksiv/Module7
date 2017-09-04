@@ -1,4 +1,4 @@
-package utils;
+package ua.goit.java8.module7.utils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
