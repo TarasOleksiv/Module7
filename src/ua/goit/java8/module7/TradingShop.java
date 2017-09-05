@@ -16,6 +16,9 @@ import java.util.List;
  */
 public class TradingShop {
     private List<Fruit> fruits = new ArrayList<>();
+    private List<Client> clients = new ArrayList<>();
+    private int moneyBalance = 0;
+    private static String pathToBalanceFile = "files/balance.json";
 
     public void addFruits(String pathToJsonFile) throws IOException {
         String json;
@@ -42,14 +45,33 @@ public class TradingShop {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        saveBalance();
         System.out.println();
         System.out.println("Finish saving DB to file");
+    }
+
+    private void saveBalance(){
+        String json = JSON.toJSONString(moneyBalance);
+        try {
+            FileUtils.writeToFile(json, pathToBalanceFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void load(String pathToJsonFile) throws IOException, ParseException {
         fruits.clear();
         showInfo(fruits);
         addFruits(pathToJsonFile);
+        loadBalance();
+    }
+
+    private void loadBalance(){
+        try {
+            moneyBalance = Integer.parseInt(FileUtils.readFromFile(pathToBalanceFile));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Fruit> getSpoiledFruits(Date date) throws ParseException {
@@ -100,6 +122,16 @@ public class TradingShop {
         return fruitList;
     }
 
+    public List<Fruit> getAvailableFruits(Fruit.Type fruitType) throws ParseException {
+        List<Fruit> fruitList = new ArrayList<>();
+        for (Fruit fruit : fruits) {
+            if (fruit.getType().equals(fruitType)) {
+                fruitList.add(fruit);
+            }
+        }
+        return fruitList;
+    }
+
     public List<Fruit> getAddedFruits(Date date) throws ParseException {
         List<Fruit> fruitList = new ArrayList<>();
         for (Fruit fruit : fruits) {
@@ -122,8 +154,67 @@ public class TradingShop {
         return fruitList;
     }
 
+    public int getCountFruitType(Fruit.Type fruitType){
+        int count = 0;
+        for (Fruit fruit: fruits){
+            if (fruit.getType().equals(fruitType)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public void addClients(String pathToJsonFile) throws IOException {
+        String json;
+        json = FileUtils.readFromFile(pathToJsonFile);
+        clients.addAll(JSON.parseArray(json,Client.class));
+        System.out.println("Orders are loaded from " + pathToJsonFile);
+    }
+
+    private int getIndex(Fruit fruitToFind){
+        int index = -1;
+        for (Fruit fruit: fruits){
+            if (fruit.equals(fruitToFind)){
+                index = fruits.indexOf(fruit);
+                break;
+            }
+        }
+        return index;
+    }
+
+    public void sell(String pathToJsonFile) throws IOException, ParseException {
+        addClients(pathToJsonFile);
+        System.out.println();
+        System.out.println("Submitting the order ...");
+        for (Client client: clients){
+            if (client.getCount() <= getCountFruitType(client.getFruitType())){
+                List<Fruit> clientFruits = getAvailableFruits(client.getFruitType());
+                int i = 0;
+                for (Fruit clientFruit: clientFruits){
+                    moneyBalance += clientFruit.getPrice();
+                    System.out.println("Selling " + clientFruit.getType() + " (price " + clientFruit.getPrice() + ") to " + client.getName());
+                    int index = getIndex(clientFruit);
+                    if (index != (-1)) {
+                        fruits.remove(index);
+                    }
+                    i++;
+                    if (i == client.getCount()) { break; }
+                }
+            } else {
+                System.out.println("It's impossible to sell " + client.getCount() + " " + client.getFruitType() + " to " + client.getName());
+                System.out.println("We have only " + getCountFruitType(client.getFruitType()) + " " + client.getFruitType() + " in the shop.");
+            }
+        }
+    }
+
     public List<Fruit> getFruits(){
         return fruits;
+    }
+
+    public List<Client> getClients() { return clients; }
+
+    public int getMoneyBalance(){
+        return moneyBalance;
     }
 
 }

@@ -18,6 +18,7 @@ public class Main {
     private static String file3 = "files/supply3.json";
     private static String file4 = "files/supply4.json";
     private static String fileDB = "files/DB.json";
+    private static String fileOrder = "files/order.json";
     private static TradingShop tradingShop = new TradingShop();
 
     public static void main(String[] args) throws IOException, ParseException {
@@ -30,6 +31,8 @@ public class Main {
         task2();
 
         task3();
+
+        task4();
 
     }
 
@@ -124,6 +127,21 @@ public class Main {
         System.out.println();
         System.out.println("List of fruits \"" + fruitType + "\" added on " + strDate);
         tradingShop.showInfo(fruitsSupplied);
+    }
+
+    private static void task4() throws IOException, ParseException {
+        System.out.println();
+        System.out.println("Task4");
+
+        // try to submit order stored in JSON file
+        tradingShop.sell(fileOrder);
+
+        // show current info on shop
+        tradingShop.showInfo(tradingShop.getFruits());
+
+        // show balance
+        System.out.println();
+        System.out.println("Shop MoneyBalance = " + tradingShop.getMoneyBalance());
     }
 
 }

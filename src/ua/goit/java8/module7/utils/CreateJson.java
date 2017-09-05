@@ -1,5 +1,6 @@
 package ua.goit.java8.module7.utils;
 
+import ua.goit.java8.module7.Client;
 import ua.goit.java8.module7.Fruit;
 import com.alibaba.fastjson.JSON;
 
@@ -11,6 +12,12 @@ public class CreateJson {
     private String[] dateSupply = {"04/08/2017", "05/08/2017", "06/08/2017", "07/08/2017"};
 
     public CreateJson() {
+        generateSupplyFiles();
+        generateOrder();
+        System.out.println("Finish creating JSON files.");
+    }
+
+    private void generateSupplyFiles(){
         for (int i = 0; i < dateSupply.length; i++) {
             List<Fruit> fruits = new ArrayList<>();
             fruits.add(new Fruit(Fruit.Type.apple, 10, dateSupply[i], 25));
@@ -30,7 +37,22 @@ public class CreateJson {
                 e.printStackTrace();
             }
         }
-        System.out.println("Finish creating JSON files.");
+    }
+
+    private void generateOrder(){
+        List<Client> clients = new ArrayList<>();
+        clients.add(new Client("John",Fruit.Type.grapefruit, 3));
+        clients.add(new Client("John",Fruit.Type.apple, 2));
+        clients.add(new Client("John",Fruit.Type.peach, 5));
+        clients.add(new Client("Peter",Fruit.Type.apple, 3));
+        clients.add(new Client("George",Fruit.Type.tangerine, 4));
+        clients.add(new Client("Ann",Fruit.Type.banana, 7));
+        String json = JSON.toJSONString(clients);
+        try {
+            FileUtils.writeToFile(json, "files/order.json");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
